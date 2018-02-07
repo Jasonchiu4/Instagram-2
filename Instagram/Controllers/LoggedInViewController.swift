@@ -89,6 +89,10 @@ class LoggedInViewController: UIViewController, UIImagePickerControllerDelegate,
         let postCell = postTableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! PostCell
         let currPost = allPosts?[indexPath.row] as! Post
         postCell.selectionStyle = .none
+        // Crashes app
+        //postCell.usernameLabel.text = currPost.author
+        //print(currPost.author)
+        //postCell.mediaLabel.image = currPost.media as! UIImageView
         return postCell
     }
     
