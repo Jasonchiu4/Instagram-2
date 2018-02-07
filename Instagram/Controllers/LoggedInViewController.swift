@@ -45,6 +45,14 @@ class Post: PFObject, PFSubclassing {
 class PostCell: UITableViewCell {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var mediaLabel: UIImageView!
+    
+    var post: PFObject! {
+        didSet {
+            self.usernameLabel.text = post["author"] as? String
+            self.mediaLabel.image = post["media"] as? UIImage
+        }
+    }
+    
 }
 
 
@@ -86,14 +94,22 @@ class LoggedInViewController: UIViewController, UIImagePickerControllerDelegate,
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! PostCell
+        if allPosts != nil{
+            let currpost = allPosts?[indexPath.row]
+            cell.post = currpost
+            cell.selectionStyle = .none
+        }
+        return cell
+        /*
         let postCell = postTableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! PostCell
         let currPost = allPosts?[indexPath.row] as! Post
         postCell.selectionStyle = .none
         // Crashes app
-        //postCell.usernameLabel.text = currPost.author
-        //print(currPost.author)
-        //postCell.mediaLabel.image = currPost.media as! UIImageView
-        return postCell
+        postCell.usernameLabel.text = currPost.author
+        //postCell.mediaLabel.image = currPost.media
+        return postCell*/
     }
     
     @IBAction func onUpload(_ sender: Any) {
