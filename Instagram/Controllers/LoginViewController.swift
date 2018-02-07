@@ -20,6 +20,11 @@ class LoginViewController: UIViewController {
         let password = passwordField.text ?? ""
         
         PFUser.logInWithUsername(inBackground: username, password: password) { (user: PFUser?, error: Error?) in
+            if username == "" || password == "" {
+                let alert = UIAlertController(title: "Error" , message: "Fields cannot be bank", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
             if let error = error {
                 let alert = UIAlertController(title: "Error", message: "Incorrect username or password", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
@@ -38,6 +43,13 @@ class LoginViewController: UIViewController {
         
         newUser.username = usernameField.text
         newUser.password = passwordField.text
+        
+        
+        if newUser.username == "" || newUser.password == "" {
+            let alert = UIAlertController(title: "Error" , message: "Fields cannot be bank", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
         
         newUser.signUpInBackground { (success: Bool, error: Error?) in
             if let error = error {
